@@ -8,4 +8,13 @@
     <display-name>Calories Counter</display-name>
 
     <!--add servlets and mapping-->
+    <servlet>
+        <servlet-name>userServlet</servlet-name>
+        <servlet-class>com.lapeevvd.web.UserServlet</servlet-class>
+        <load-on-startup>0</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>userServlet</servlet-name>
+        <url-pattern>/users</url-pattern>
+    </servlet-mapping>
 </web-app>
