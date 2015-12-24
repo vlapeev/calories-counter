@@ -2,14 +2,12 @@ package com.lapeevvd.dataTransferObject;
 
 import com.lapeevvd.model.UserMeal;
 
-import java.time.LocalDateTime;
-
 public class UserMealWithExceed extends UserMeal{
 
     protected final boolean exceed;
 
-    public UserMealWithExceed(LocalDateTime dateTime, String description, int calories, boolean exceed) {
-        super(dateTime, description, calories);
+    public UserMealWithExceed(UserMeal userMeal, boolean exceed) {
+        super(userMeal.getId(), userMeal.getDateTime(), userMeal.getDescription(), userMeal.getCalories());
         this.exceed = exceed;
     }
 

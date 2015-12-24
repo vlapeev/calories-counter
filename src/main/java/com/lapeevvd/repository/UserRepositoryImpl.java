@@ -1,16 +1,31 @@
 package com.lapeevvd.repository;
 
+import com.lapeevvd.model.Role;
 import com.lapeevvd.model.User;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 @Repository
 public class UserRepositoryImpl implements UserRepository {
+    private Map<Integer, User> userMap = new ConcurrentHashMap<>();
+    private AtomicInteger counter = new AtomicInteger(0);
+
+    {
+        save(new User(1, "User", "user", "user@mail.io", Role.USER));
+        save(new User(2, "Admin", "admin", "admin@gmail.com", Role.ADMIN));
+    }
 
     @Override
     public User save(User user) {
-        return null;
+        if (user.isNew()){
+            user.setId(counter.incrementAndGet());
+        }
+        return userMap.put(user.getId(), user);
     }
 
     /**
@@ -18,7 +33,7 @@ public class UserRepositoryImpl implements UserRepository {
      */
     @Override
     public boolean delete(int id) {
-        return false;
+        return userMap.remove(id) != null;
     }
 
     /**
@@ -26,7 +41,7 @@ public class UserRepositoryImpl implements UserRepository {
      */
     @Override
     public User get(int id) {
-        return null;
+        return userMap.get(id);
     }
 
     /**
@@ -34,11 +49,11 @@ public class UserRepositoryImpl implements UserRepository {
      */
     @Override
     public User getByEmail(String email) {
-        return null;
+        return userMap.values().stream().filter(user -> user.getEmail().equals(email)).findFirst().orElse(null);
     }
 
     @Override
     public List<User> getAll() {
-        return null;
+        return userMap.values().stream().sorted((u1, u2) -> u1.getName().compareTo(u2.getName())).collect(Collectors.toList());
     }
 }

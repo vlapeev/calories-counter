@@ -4,8 +4,11 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
          id="WebApp_ID" version="2.5">
 
-
     <display-name>Calories Counter</display-name>
+
+    <welcome-file-list>
+        <welcome-file>startPage.html</welcome-file>
+    </welcome-file-list>
 
     <!--add servlets and mapping-->
     <servlet>
@@ -16,5 +19,15 @@
     <servlet-mapping>
         <servlet-name>userServlet</servlet-name>
         <url-pattern>/users</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>userMealServlet</servlet-name>
+        <servlet-class>com.lapeevvd.web.UserMealServlet</servlet-class>
+        <load-on-startup>0</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>userMealServlet</servlet-name>
+        <url-pattern>/meals</url-pattern>
     </servlet-mapping>
 </web-app>

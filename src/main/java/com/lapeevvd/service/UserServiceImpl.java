@@ -1,7 +1,7 @@
 package com.lapeevvd.service;
 
 import com.lapeevvd.model.User;
-import com.lapeevvd.repository.UserRepositoryImpl;
+import com.lapeevvd.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +13,7 @@ public class UserServiceImpl implements UserService{
     // TODO: 22.12.2015 Тут тоже разобраться с исключениями
 
     @Autowired
-    private UserRepositoryImpl repository;
+    private UserRepository repository;
 
     @Override
     public User save(User user) {

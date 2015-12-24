@@ -1,5 +1,7 @@
 package com.lapeevvd.web;
 
+import com.lapeevvd.util.LoggedUser;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -8,11 +10,15 @@ import java.io.IOException;
 
 public class UserServlet extends HttpServlet{
 
-    protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        int userId = Integer.valueOf(req.getParameter("userId"));
+        LoggedUser.setId(userId);
+        resp.sendRedirect("mealList.jsp");
     }
 
-    protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-        res.sendRedirect("userList.jsp");
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.sendRedirect("userList.jsp");
     }
 }
