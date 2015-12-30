@@ -11,14 +11,14 @@ import java.io.IOException;
 public class UserServlet extends HttpServlet{
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        int userId = Integer.valueOf(req.getParameter("userId"));
-        LoggedUser.setId(userId);
-        resp.sendRedirect("mealList.jsp");
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.sendRedirect("userList.jsp");
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.sendRedirect("userList.jsp");
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        int userId = Integer.valueOf(req.getParameter("userId"));
+        LoggedUser.setId(userId);
+        resp.sendRedirect("meals");
     }
 }

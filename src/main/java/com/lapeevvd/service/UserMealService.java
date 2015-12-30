@@ -1,6 +1,7 @@
 package com.lapeevvd.service;
 
 import com.lapeevvd.model.UserMeal;
+import com.lapeevvd.util.exception.NotFoundException;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -10,11 +11,11 @@ import java.util.List;
 public interface UserMealService {
     UserMeal save(UserMeal userMeal, int userId);
 
-    UserMeal update(UserMeal userMeal, int userId);
+    UserMeal update(UserMeal userMeal, int userId) throws NotFoundException;
 
-    void delete(int id, int userId);
+    void delete(int id, int userId) throws NotFoundException;
 
-    UserMeal get(int id, int userId);
+    UserMeal get(int id, int userId) throws NotFoundException;
 
     List<UserMeal> getAll(int userId);
 

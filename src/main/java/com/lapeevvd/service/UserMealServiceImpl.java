@@ -11,6 +11,7 @@ import java.util.List;
 @Service
 public class UserMealServiceImpl implements UserMealService{
 
+    // TODO: 25.12.2015 Реализовать исключения
     @Autowired
     private UserMealRepository repository;
 

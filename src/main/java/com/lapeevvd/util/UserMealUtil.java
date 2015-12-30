@@ -16,17 +16,17 @@ public class UserMealUtil {
     public static final int DEFAULT_CALORIES_PER_DAY = 2000;
 
     public static final List<UserMeal> USER_MEAL_LIST = Arrays.asList(
-            new UserMeal(LocalDateTime.of(2015, Month.MAY, 30, 10, 0), "Завтрак", 500),
-            new UserMeal(LocalDateTime.of(2015, Month.MAY, 30, 13, 0), "Обед", 1000),
-            new UserMeal(LocalDateTime.of(2015, Month.MAY, 30, 20, 0), "Ужин", 500),
-            new UserMeal(LocalDateTime.of(2015, Month.MAY, 31, 10, 0), "Завтрак", 1000),
-            new UserMeal(LocalDateTime.of(2015, Month.MAY, 31, 13, 0), "Обед", 500),
-            new UserMeal(LocalDateTime.of(2015, Month.MAY, 31, 20, 0), "Ужин", 510)
+            new UserMeal(LocalDateTime.of(2015, Month.DECEMBER, 22, 10, 0), "Завтрак", 500),
+            new UserMeal(LocalDateTime.of(2015, Month.DECEMBER, 22, 13, 0), "Обед", 1000),
+            new UserMeal(LocalDateTime.of(2015, Month.DECEMBER, 22, 20, 0), "Ужин", 500),
+            new UserMeal(LocalDateTime.of(2015, Month.DECEMBER, 23, 10, 0), "Завтрак", 1000),
+            new UserMeal(LocalDateTime.of(2015, Month.DECEMBER, 23, 13, 0), "Обед", 500),
+            new UserMeal(LocalDateTime.of(2015, Month.DECEMBER, 23, 20, 0), "Ужин", 510)
     );
 
     public static final List<UserMeal> ADMIN_MEAL_LIST = Arrays.asList(
-            new UserMeal(LocalDateTime.of(2015, Month.JUNE, 1, 14, 0), "Админ ланч", 510),
-            new UserMeal(LocalDateTime.of(2015, Month.JUNE, 1, 21, 0), "Админ ужин", 1500)
+            new UserMeal(LocalDateTime.of(2015, Month.DECEMBER, 24, 14, 0), "Админ ланч", 510),
+            new UserMeal(LocalDateTime.of(2015, Month.DECEMBER, 24, 21, 0), "Админ ужин", 1500)
     );
 
     public static UserMealWithExceed createWithExceed(UserMeal userMeal, boolean exceeded) {

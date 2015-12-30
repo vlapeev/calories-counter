@@ -1,5 +1,8 @@
 package com.lapeevvd.util;
 
+import org.springframework.util.StringUtils;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
@@ -13,6 +16,14 @@ public class TimeUtil {
         return localDateTime.compareTo(start) >=0 && localDateTime.compareTo(end) <=0;
     }
 
-    // TODO: 24.12.2015 парсинг LocalDate b & LocalTime вместе с StringUtils.isEmpty ? : ;
+    // парсинг LocalDate & LocalTime вместе с StringUtils.isEmpty ? : ;
+
+    public static LocalDate parseLocalDate(String respParamValue, LocalDate def){
+        return StringUtils.isEmpty(respParamValue) ? def : LocalDate.parse(respParamValue);
+    }
+
+    public static LocalTime parseLocalTime(String respParamValue, LocalTime def){
+        return StringUtils.isEmpty(respParamValue) ? def : LocalTime.parse(respParamValue);
+    }
 
 }

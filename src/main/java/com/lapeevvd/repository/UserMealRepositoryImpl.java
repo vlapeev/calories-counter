@@ -32,7 +32,8 @@ public class UserMealRepositoryImpl implements UserMealRepository{
      */
     @Override
     public UserMeal save(UserMeal userMeal, int userId) {
-        int mealId = userMeal.getId();
+        /*Objects.requireNonNull(userMeal);*/
+        Integer mealId = userMeal.getId();
 
         if (userMeal.isNew()){
             mealId = counter.incrementAndGet();
@@ -78,6 +79,8 @@ public class UserMealRepositoryImpl implements UserMealRepository{
      */
     @Override
     public List<UserMeal> getBetween(LocalDateTime start, LocalDateTime end, int userId) {
+        /*Objects.requireNonNull(start);
+        Objects.requireNonNull(end);*/
         return getAll(userId).stream()
                 .filter(userMeal -> TimeUtil.isBetween(userMeal.getDateTime(), start, end))
                 .collect(Collectors.toList());

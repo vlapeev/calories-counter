@@ -34,12 +34,12 @@ public class UserMealController {
         return service.get(id, LoggedUser.getId());
     }
 
-    List<UserMealWithExceed> getAll(){
+    public List<UserMealWithExceed> getAll(){
         return UserMealUtil.getFilteredWithExceeded(service.getAll(LoggedUser.getId()),
                 LocalTime.MIN, LocalTime.MAX, UserMealUtil.DEFAULT_CALORIES_PER_DAY);
     }
 
-    List<UserMealWithExceed> getBetween(LocalDate startDate, LocalDate endDate, LocalTime startTime, LocalTime endTime){
+    public List<UserMealWithExceed> getBetween(LocalDate startDate, LocalDate endDate, LocalTime startTime, LocalTime endTime){
         return UserMealUtil.getFilteredWithExceeded(service.getBetweenDates(startDate, endDate, LoggedUser.getId()),
                 startTime, endTime, UserMealUtil.DEFAULT_CALORIES_PER_DAY);
     }
