@@ -1,6 +1,5 @@
 package com.lapeevvd.repository;
 
-import com.lapeevvd.model.Role;
 import com.lapeevvd.model.User;
 import org.springframework.stereotype.Repository;
 
@@ -15,10 +14,10 @@ public class UserRepositoryImpl implements UserRepository {
     private Map<Integer, User> userMap = new ConcurrentHashMap<>();
     private AtomicInteger counter = new AtomicInteger(0);
 
-    {
+    /*{
         save(new User(1, "User", "user", "user@mail.io", Role.USER));
         save(new User(2, "Admin", "admin", "admin@gmail.com", Role.ADMIN));
-    }
+    }*/
 
     @Override
     public User save(User user) {

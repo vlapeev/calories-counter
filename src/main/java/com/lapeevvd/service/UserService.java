@@ -1,22 +1,21 @@
 package com.lapeevvd.service;
 
 import com.lapeevvd.model.User;
+import com.lapeevvd.util.exception.NotFoundException;
 
 import java.util.List;
 
 public interface UserService {
 
-    // TODO: 22.12.2015 Реализовать свой механиз обработки исключений
-
     User save(User user);
 
     void update(User user);
 
-    void delete(int id);
+    void delete(int id) throws NotFoundException;
 
-    User get(int id);
+    User get(int id) throws NotFoundException;
 
-    User getByEmail(String email);
+    User getByEmail(String email) throws NotFoundException;
 
     List<User> getAll();
 }

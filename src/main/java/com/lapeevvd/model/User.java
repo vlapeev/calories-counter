@@ -15,6 +15,13 @@ public class User extends NamedEntity {
     protected Set<Role> roles;
     protected int caloriesPerDay;
 
+    public User() {}
+
+    // под тесты
+    public User(User u){
+        this(u.getId(), u.getName(), u.getPassword(), u.getEmail(), u.isEnabled(), u.getRoles(), u.getCaloriesPerDay());
+    }
+
     public User(Integer id, String name, String password, String email, Role role, Role... roles) {
         this(id, name, password, email, true, EnumSet.of(role, roles), UserMealUtil.DEFAULT_CALORIES_PER_DAY);
     }
@@ -74,5 +81,17 @@ public class User extends NamedEntity {
 
     public void setCaloriesPerDay(int caloriesPerDay) {
         this.caloriesPerDay = caloriesPerDay;
+    }
+
+    @Override
+    public String toString() {
+        return "User (" +
+                "id=" + id +
+                ", email=" + email +
+                ", name=" + name +
+                ", enabled=" + enabled +
+                ", roles=" + roles +
+                ", caloriesPerDay=" + caloriesPerDay +
+                ')';
     }
 }

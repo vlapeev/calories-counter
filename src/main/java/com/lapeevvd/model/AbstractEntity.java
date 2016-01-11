@@ -1,6 +1,8 @@
 package com.lapeevvd.model;
 
 public class AbstractEntity {
+    public static final int START_SEQ = 100000;
+
     protected Integer id;
 
     public AbstractEntity(Integer id) {
@@ -15,12 +17,16 @@ public class AbstractEntity {
         this.id = id;
     }
 
+    public AbstractEntity() {}
+
     // Проверка существования объекта
     public boolean isNew() {
         return this.id == null;
     }
 
+
     // переопределение equals и hashCode
+    // TODO: 11.01.2016 Здесь может быть какой-то критический момент
 
     @Override
     public boolean equals(Object o) {

@@ -2,15 +2,15 @@ package com.lapeevvd.service;
 
 import com.lapeevvd.model.User;
 import com.lapeevvd.repository.UserRepository;
+import com.lapeevvd.util.exception.CheckException;
+import com.lapeevvd.util.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class UserServiceImpl implements UserService{
-
-    // TODO: 22.12.2015 Тут тоже разобраться с исключениями
+public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository repository;
@@ -25,22 +25,19 @@ public class UserServiceImpl implements UserService{
         repository.save(user);
     }
 
-    //сюда исключение
     @Override
-    public void delete(int id) {
-        repository.delete(id);
+    public void delete(int id) throws NotFoundException {
+        CheckException.check(repository.delete(id), id);
     }
 
-    //сюда исключение
     @Override
-    public User get(int id) {
-        return repository.get(id);
+    public User get(int id) throws NotFoundException {
+        return CheckException.check(repository.get(id), id);
     }
 
-    //сюда исключение
     @Override
-    public User getByEmail(String email) {
-        return repository.getByEmail(email);
+    public User getByEmail(String email) throws NotFoundException {
+        return CheckException.check(repository.getByEmail(email), "email = " + email);
     }
 
     @Override

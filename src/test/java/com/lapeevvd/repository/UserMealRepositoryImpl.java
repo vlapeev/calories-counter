@@ -13,6 +13,9 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
+import static com.lapeevvd.UserTestData.ADMIN_ID;
+import static com.lapeevvd.UserTestData.USER_ID;
+
 @Repository
 public class UserMealRepositoryImpl implements UserMealRepository{
 
@@ -21,9 +24,6 @@ public class UserMealRepositoryImpl implements UserMealRepository{
     private AtomicInteger counter = new AtomicInteger(0);
 
     {
-        int USER_ID = 1;
-        int ADMIN_ID = 2;
-
         UserMealUtil.USER_MEAL_LIST.forEach(userMeal -> save(userMeal, USER_ID));
         UserMealUtil.ADMIN_MEAL_LIST.forEach(userMeal -> save(userMeal, ADMIN_ID));
     }

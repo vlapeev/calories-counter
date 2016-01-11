@@ -1,7 +1,7 @@
 package com.lapeevvd.util;
 
 public class LoggedUser {
-    private static int id = 1;
+    private static int id = 100000;
 
     public static int getId() {
         return id;

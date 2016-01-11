@@ -23,7 +23,7 @@ public class UserMealServlet extends HttpServlet{
     @Override
     public void init() throws ServletException {
         super.init();
-        springContext = new ClassPathXmlApplicationContext("spring/spring-context.xml");
+        springContext = new ClassPathXmlApplicationContext("spring/spring-context.xml", "spring/spring-db.xml");
         controller = springContext.getBean(UserMealController.class);
     }
 
@@ -76,7 +76,7 @@ public class UserMealServlet extends HttpServlet{
             resp.sendRedirect("meals");
         } else if (action.equals("filter")){
 
-            LocalDate startDate = TimeUtil.parseLocalDate(resetParam("startDate", req), LocalDate.MIN);
+                LocalDate startDate = TimeUtil.parseLocalDate(resetParam("startDate", req), LocalDate.MIN);
             LocalDate endDate = TimeUtil.parseLocalDate(resetParam("endDate", req), LocalDate.MAX);
             LocalTime startTime = TimeUtil.parseLocalTime(resetParam("startTime", req), LocalTime.MIN);
             LocalTime endTime = TimeUtil.parseLocalTime(resetParam("endTime", req), LocalTime.MAX);
