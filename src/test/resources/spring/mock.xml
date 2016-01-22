@@ -6,9 +6,5 @@
 
     <context:annotation-config/>
 
-    <context:component-scan base-package="com.lapeevvd.**.service"/>
-
-    <context:component-scan base-package="com.lapeevvd.**.web"/>
-
-    <context:component-scan base-package="com.lapeevvd.**.controller"/>
+    <context:component-scan base-package="com.lapeevvd.**.repository.mock"/>
 </beans>

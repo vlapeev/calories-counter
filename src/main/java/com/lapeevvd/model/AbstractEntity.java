@@ -1,8 +1,20 @@
 package com.lapeevvd.model;
 
+import javax.persistence.*;
+
+
+/**
+ * Access(AccessType.FIELD) - вроде как дефолтное значение, попробовать убрать
+ */
+@MappedSuperclass
+@Access(AccessType.FIELD)
 public class AbstractEntity {
+
     public static final int START_SEQ = 100000;
 
+    @Id
+    @SequenceGenerator(name = "global_seq", sequenceName = "global_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "global_seq")
     protected Integer id;
 
     public AbstractEntity(Integer id) {
@@ -17,17 +29,16 @@ public class AbstractEntity {
         this.id = id;
     }
 
-    public AbstractEntity() {}
+    public AbstractEntity() {
+        super();
+    }
 
     // Проверка существования объекта
     public boolean isNew() {
         return this.id == null;
     }
 
-
     // переопределение equals и hashCode
-    // TODO: 11.01.2016 Здесь может быть какой-то критический момент
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -36,6 +47,7 @@ public class AbstractEntity {
         AbstractEntity that = (AbstractEntity) o;
         if (this.id == null || that.id == null){
             // TODO: 22.12.2015 ошибка на несовпадение id
+            throw new IllegalStateException("Equals '" + this + "' and '" + that + "' with null id");
         }
         return !(id != null ? !id.equals(that.id) : that.id != null);
     }

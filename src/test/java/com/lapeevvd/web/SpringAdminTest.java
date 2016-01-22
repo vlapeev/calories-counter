@@ -16,7 +16,7 @@ import java.util.List;
 
 import static com.lapeevvd.UserTestData.*;
 
-@ContextConfiguration("classpath:spring/spring-context.xml")
+@ContextConfiguration({"classpath:spring/spring-context.xml", "classpath:spring/mock.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
 public class SpringAdminTest {
 

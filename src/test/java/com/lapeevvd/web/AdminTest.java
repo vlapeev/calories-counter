@@ -4,29 +4,42 @@ import com.lapeevvd.controller.AdminController;
 import com.lapeevvd.model.User;
 import com.lapeevvd.repository.UserRepository;
 import com.lapeevvd.util.exception.NotFoundException;
-import org.junit.*;
-import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.List;
 
 import static com.lapeevvd.UserTestData.*;
 
+@ContextConfiguration({"classpath:spring/spring-context.xml", "classpath:spring/mock.xml"})
+@RunWith(SpringJUnit4ClassRunner.class)
 public class AdminTest {
 
-    private static ConfigurableApplicationContext springContext;
-    private static AdminController controller;
-    @BeforeClass
+
+    /* private static ConfigurableApplicationContext springContext;*/
+
+    @Autowired
+    private AdminController controller;
+
+    @Autowired
+    private UserRepository repository;
+
+    /*@BeforeClass
     public static void beforeClass(){
-        springContext = new ClassPathXmlApplicationContext("spring/spring-context.xml");
+        springContext = new ClassPathXmlApplicationContext("spring/spring-context.xml", "spring/mock.xml");
         controller = springContext.getBean(AdminController.class);
-    }
+    }*/
 
     @Before
     public void setUp() throws Exception{
-        UserRepository repository = springContext.getBean(UserRepository.class);
-        //эта строка под вопросом
-        repository.getAll().forEach(user -> repository.delete(user.getId()));
+        /*UserRepository repository = springContext.getBean(UserRepository.class);
+        //эта строка под вопросом*/
+        /*repository.getAll().forEach(user -> repository.delete(user.getId()));*/
         repository.save(USER);
         repository.save(ADMIN);
     }
@@ -44,8 +57,8 @@ public class AdminTest {
         controller.delete(9000);
     }
 
-    @AfterClass
+    /*@AfterClass
     public static void afterClass(){
         springContext.close();
-    }
+    }*/
 }

@@ -1,6 +1,7 @@
-package com.lapeevvd.repository;
+package com.lapeevvd.repository.mock;
 
 import com.lapeevvd.model.UserMeal;
+import com.lapeevvd.repository.UserMealRepository;
 import com.lapeevvd.util.TimeUtil;
 import com.lapeevvd.util.UserMealUtil;
 import org.springframework.stereotype.Repository;
@@ -17,7 +18,7 @@ import static com.lapeevvd.UserTestData.ADMIN_ID;
 import static com.lapeevvd.UserTestData.USER_ID;
 
 @Repository
-public class UserMealRepositoryImpl implements UserMealRepository{
+public class UserMealRepositoryImpl implements UserMealRepository {
 
     // Map  <userId, <mealId, userMeal>>
     private Map<Integer, Map<Integer, UserMeal>> usersMealMap = new ConcurrentHashMap<>();

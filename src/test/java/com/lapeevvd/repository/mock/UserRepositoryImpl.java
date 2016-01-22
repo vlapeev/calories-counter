@@ -1,6 +1,7 @@
-package com.lapeevvd.repository;
+package com.lapeevvd.repository.mock;
 
 import com.lapeevvd.model.User;
+import com.lapeevvd.repository.UserRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

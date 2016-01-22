@@ -2,6 +2,7 @@ package com.lapeevvd.service;
 
 import com.lapeevvd.model.UserMeal;
 import com.lapeevvd.repository.UserMealRepository;
+import com.lapeevvd.util.exception.CheckException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +12,6 @@ import java.util.List;
 @Service
 public class UserMealServiceImpl implements UserMealService{
 
-    // TODO: 25.12.2015 Реализовать исключения
     @Autowired
     private UserMealRepository repository;
 
@@ -20,19 +20,22 @@ public class UserMealServiceImpl implements UserMealService{
         return repository.save(userMeal, userId);
     }
 
+    // может кинуть исключение
     @Override
     public UserMeal update(UserMeal userMeal, int userId) {
-        return repository.save(userMeal, userId);
+        return CheckException.check(repository.save(userMeal, userId), userMeal.getId());
     }
 
+    // может кинуть исключение
     @Override
     public void delete(int id, int userId) {
-        repository.delete(id, userId);
+        CheckException.check(repository.delete(id, userId), id);
     }
 
+    // может кинуть исключение
     @Override
     public UserMeal get(int id, int userId) {
-        return repository.get(id, userId);
+        return CheckException.check(repository.get(id, userId), id);
     }
 
     @Override

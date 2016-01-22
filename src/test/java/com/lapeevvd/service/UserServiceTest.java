@@ -4,14 +4,16 @@ import com.lapeevvd.TestUser;
 import com.lapeevvd.model.Role;
 import com.lapeevvd.model.User;
 import com.lapeevvd.repository.jdbc.JdbcUserRepositoryImpl;
-import com.lapeevvd.util.DBPopulator;
+import com.lapeevvd.util.Profiles;
 import com.lapeevvd.util.exception.NotFoundException;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.sql.DataSource;
@@ -24,21 +26,15 @@ import static com.lapeevvd.UserTestData.*;
 
 @ContextConfiguration({"classpath:spring/spring-context.xml", "classpath:spring/spring-db.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
+@ActiveProfiles(Profiles.POSTGRES)
+@Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
 public class UserServiceTest {
 
     @Autowired
     protected UserService service;
 
     @Autowired
-    private DBPopulator dbPopulator;
-
-    @Autowired
     private DataSource dataSource;
-
-    @Before
-    public void setUp() throws Exception {
-        dbPopulator.execute();
-    }
 
     @Test
     public void testSaveInDB() throws Exception {
