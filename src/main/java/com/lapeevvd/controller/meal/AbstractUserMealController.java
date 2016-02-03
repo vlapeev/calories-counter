@@ -1,4 +1,4 @@
-package com.lapeevvd.controller;
+package com.lapeevvd.controller.meal;
 
 import com.lapeevvd.dataTransferObject.UserMealWithExceed;
 import com.lapeevvd.model.UserMeal;
@@ -13,10 +13,10 @@ import java.time.LocalTime;
 import java.util.List;
 
 @Controller
-public class UserMealController {
+public class AbstractUserMealController {
 
     @Autowired
-    private UserMealService service;
+    protected UserMealService service;
 
     public UserMeal save(UserMeal userMeal){
         return service.save(userMeal, LoggedUser.getId());

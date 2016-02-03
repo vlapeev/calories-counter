@@ -16,6 +16,7 @@ public class UserMealServiceImpl implements UserMealService{
     private UserMealRepository repository;
 
     @Override
+    //@CacheEvict(value = "meals", allEntries = true)
     public UserMeal save(UserMeal userMeal, int userId) {
         return repository.save(userMeal, userId);
     }
@@ -46,6 +47,11 @@ public class UserMealServiceImpl implements UserMealService{
     @Override
     public List<UserMeal> getBetween(LocalDateTime startDateTime, LocalDateTime endDateTime, int userId) {
         return repository.getBetween(startDateTime, endDateTime, userId);
+    }
+
+    @Override
+    public UserMeal getWithUser(int id, int userId) {
+        return repository.getWithUser(id, userId);
     }
 
 

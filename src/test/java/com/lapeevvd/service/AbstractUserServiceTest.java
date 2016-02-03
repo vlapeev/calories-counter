@@ -3,18 +3,11 @@ package com.lapeevvd.service;
 import com.lapeevvd.TestUser;
 import com.lapeevvd.model.Role;
 import com.lapeevvd.model.User;
-import com.lapeevvd.repository.jdbc.JdbcUserRepositoryImpl;
-import com.lapeevvd.util.Profiles;
 import com.lapeevvd.util.exception.NotFoundException;
+import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.jdbc.SqlConfig;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.sql.DataSource;
 import java.util.Arrays;
@@ -24,24 +17,25 @@ import java.util.Collections;
 import static com.lapeevvd.TestUser.MATCHER;
 import static com.lapeevvd.UserTestData.*;
 
-@ContextConfiguration({"classpath:spring/spring-context.xml", "classpath:spring/spring-db.xml"})
-@RunWith(SpringJUnit4ClassRunner.class)
-@ActiveProfiles(Profiles.POSTGRES)
-@Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
-public class UserServiceTest {
+public abstract class AbstractUserServiceTest extends AbstractServiceTest {
 
     @Autowired
     protected UserService service;
 
     @Autowired
-    private DataSource dataSource;
+    protected DataSource dataSource;
 
-    @Test
+    @Before
+    public void setUp(){
+        service.evictCache();
+    }
+
+    /*@Test
     public void testSaveInDB() throws Exception {
         JdbcUserRepositoryImpl repository = new JdbcUserRepositoryImpl(dataSource);
-        TestUser testUser = new TestUser(null, "John", "stupidpassword", "new@dkkh.com", false, Collections.singleton(Role.USER), 1555);
+        TestUser testUser = new TestUser(null, "John", "stupid_password", "new@dkkh.com", false, Collections.singleton(Role.USER), 1555);
         repository.save(testUser);
-    }
+    }*/
 
     @Test
     public void testSave() throws Exception {

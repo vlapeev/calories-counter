@@ -1,36 +1,16 @@
 package com.lapeevvd.web;
 
-import com.lapeevvd.controller.UserMealController;
-import com.lapeevvd.model.UserMeal;
-import com.lapeevvd.util.TimeUtil;
-import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 public class UserMealServlet extends HttpServlet{
 
-    private ConfigurableApplicationContext springContext;
-    private UserMealController controller;
+   /* private UserMealController controller;
 
     @Override
     public void init() throws ServletException {
         super.init();
-        springContext = new ClassPathXmlApplicationContext("spring/spring-context.xml", "spring/spring-db.xml");
+        WebApplicationContext springContext = WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
         controller = springContext.getBean(UserMealController.class);
-    }
-
-    @Override
-    public void destroy() {
-        springContext.close();
-        super.destroy();
     }
 
     @Override
@@ -76,8 +56,8 @@ public class UserMealServlet extends HttpServlet{
             resp.sendRedirect("meals");
         } else if (action.equals("filter")){
 
-                LocalDate startDate = TimeUtil.parseLocalDate(resetParam("startDate", req), LocalDate.MIN);
-            LocalDate endDate = TimeUtil.parseLocalDate(resetParam("endDate", req), LocalDate.MAX);
+                LocalDate startDate = TimeUtil.parseLocalDate(resetParam("startDate", req), TimeUtil.MIN_DATE);
+            LocalDate endDate = TimeUtil.parseLocalDate(resetParam("endDate", req), TimeUtil.MAX_DATE);
             LocalTime startTime = TimeUtil.parseLocalTime(resetParam("startTime", req), LocalTime.MIN);
             LocalTime endTime = TimeUtil.parseLocalTime(resetParam("endTime", req), LocalTime.MAX);
 
@@ -90,5 +70,5 @@ public class UserMealServlet extends HttpServlet{
         String value = req.getParameter(param);
         req.setAttribute(param, value);
         return value;
-    }
+    }*/
 }

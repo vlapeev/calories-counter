@@ -24,4 +24,6 @@ public interface UserMealService {
     default List<UserMeal> getBetweenDates(LocalDate startDate, LocalDate endDate, int userId) {
         return getBetween(LocalDateTime.of(startDate, LocalTime.MIN), LocalDateTime.of(endDate, LocalTime.MAX), userId);
     }
+
+    UserMeal getWithUser(int id, int userId);
 }

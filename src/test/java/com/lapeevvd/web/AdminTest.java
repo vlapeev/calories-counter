@@ -1,6 +1,6 @@
 package com.lapeevvd.web;
 
-import com.lapeevvd.controller.AdminController;
+import com.lapeevvd.controller.user.AdminRestController;
 import com.lapeevvd.model.User;
 import com.lapeevvd.repository.UserRepository;
 import com.lapeevvd.util.exception.NotFoundException;
@@ -16,7 +16,7 @@ import java.util.List;
 
 import static com.lapeevvd.UserTestData.*;
 
-@ContextConfiguration({"classpath:spring/spring-context.xml", "classpath:spring/mock.xml"})
+@ContextConfiguration({"classpath:spring/spring-app.xml", "classpath:spring/mock.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
 public class AdminTest {
 
@@ -24,14 +24,14 @@ public class AdminTest {
     /* private static ConfigurableApplicationContext springContext;*/
 
     @Autowired
-    private AdminController controller;
+    private AdminRestController controller;
 
     @Autowired
     private UserRepository repository;
 
     /*@BeforeClass
     public static void beforeClass(){
-        springContext = new ClassPathXmlApplicationContext("spring/spring-context.xml", "spring/mock.xml");
+        springContext = new ClassPathXmlApplicationContext("spring/spring-app.xml", "spring/mock.xml");
         controller = springContext.getBean(AdminController.class);
     }*/
 

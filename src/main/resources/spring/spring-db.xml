@@ -4,66 +4,21 @@
        xmlns:p="http://www.springframework.org/schema/p"
        xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+       xmlns:jee="http://www.springframework.org/schema/jee"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
        http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.1.xsd
-       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.1.xsd">
-
-    <context:component-scan base-package="com.lapeevvd.**.repository.jpa"/>
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.1.xsd
+       http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+       http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd">
 
     <jdbc:initialize-database data-source="dataSource" enabled="${database.init}">
         <jdbc:script location="${init.location}"/>
-        <jdbc:script encoding="UTF-8" location="${populate.location}"/>
-    </jdbc:initialize-database>
-
-    <bean id="emf" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
-          p:dataSource-ref="dataSource"
-          p:packagesToScan="com.lapeevvd.**.model">
-
-        <property name="jpaPropertyMap">
-            <map>
-                <entry key="#{T(org.hibernate.cfg.AvailableSettings).FORMAT_SQL}" value="${hibernate.format_sql}"/>
-                <entry key="#{T(org.hibernate.cfg.AvailableSettings).USE_SQL_COMMENTS}" value="${hibernate.use_sql_comments}"/>
-                <!--<entry key="#{T(org.hibernate.cfg.AvailableSettings).HBM2DDL_AUTO}" value="${hibernate.hbm2ddl.auto}"/>-->
-            </map>
-        </property>
-
-        <property name="jpaVendorAdapter">
-            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"
-                p:showSql="${jpa.showSql}">
-            </bean>
-        </property>
-    </bean>
-
-    <tx:annotation-driven/>
-
-    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"
-          p:entityManagerFactory-ref="emf"/>
-
-
-    <!-- JDBC -->
-
-    <!--<context:component-scan base-package="com.lapeevvd.**.repository.jdbc"/>
-
-    <jdbc:initialize-database data-source="dataSource" enabled="${database.init}">
-        <jdbc:script location="classpath:db/initDB.sql"/>
         <jdbc:script encoding="UTF-8" location="classpath:db/populateDB.sql"/>
     </jdbc:initialize-database>
 
-    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="org.postgresql.Driver"/>
-        <property name="url" value="${database.url}"/>
-        <property name="username" value="${database.username}"/>
-        <property name="password" value="${database.password}"/>
-    </bean>
-
-    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
-        <constructor-arg ref="dataSource"/>
-    </bean>
-
-    <bean id="namedJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
-        <constructor-arg ref="dataSource"/>
-    </bean> -->
+    <tx:annotation-driven/>
 
     <beans profile="hsqldb">
         <context:property-placeholder location="classpath:db/hsql.properties" system-properties-mode="OVERRIDE"/>
@@ -84,5 +39,78 @@
               p:url="${database.url}"
               p:username="${database.username}"
               p:password="${database.password}"/>
+    </beans>
+
+    <beans profile="jdbc">
+        <context:component-scan base-package="com.lapeevvd.**.repository.jdbc"/>
+
+        <jdbc:initialize-database data-source="dataSource" enabled="${database.init}">
+            <jdbc:script location="classpath:db/initDB.sql"/>
+            <jdbc:script encoding="UTF-8" location="classpath:db/populateDB.sql"/>
+        </jdbc:initialize-database>
+
+        <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+            <constructor-arg ref="dataSource"/>
+        </bean>
+
+        <bean id="namedJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+            <constructor-arg ref="dataSource"/>
+        </bean>
+        <bean class="org.springframework.jdbc.datasource.DataSourceTransactionManager" p:dataSource-ref="dataSource">
+
+        </bean>
+    </beans>
+
+    <beans profile="jpa">
+        <context:component-scan base-package="com.lapeevvd.**.repository.jpa"/>
+    </beans>
+
+    <beans profile="datajpa">
+        <context:component-scan base-package="com.lapeevvd.**.repository.datajpa"/>
+        <jpa:repositories base-package="com.lapeevvd.**.repository.datajpa" entity-manager-factory-ref="emf"/>
+
+    </beans>
+
+    <beans profile="tomcat">
+        <!--<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+            <property name="jndiName" value="java:comp/env/jdbc/CaloriesCounter"/>
+            <property name="expectedType" value="javax.sql.DataSource"/>
+        </bean>-->
+        <jee:jndi-lookup id="dataSource" jndi-name="java:comp/env/jdbc/CaloriesCounter" expected-type="javax.sql.DataSource"/>
+        <context:property-placeholder location="classpath:db/tomcat.properties" system-properties-mode="OVERRIDE"/>
+    </beans>
+
+    <beans profile="datajpa, jpa">
+        <bean id="emf" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
+              p:dataSource-ref="dataSource"
+              p:packagesToScan="com.lapeevvd.**.model">
+
+            <property name="jpaPropertyMap">
+                <map>
+                    <entry key="hibernate.format_sql" value="${hibernate.format_sql}"/>
+                    <entry key="hibernate.use_sql_comments" value="${hibernate.use_sql_comments}"/>
+                    <!--cache-->
+                    <entry key="hibernate.cache.region.factory_class" value="org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory"/>
+                    <entry key="hibernate.cache.use_second_level_cache" value="true"/>
+                    <!--ehcache-->
+                    <entry key="net.sf.ehcache.configurationResourceName" value="cache/ehcache.xml"/>
+
+                </map>
+            </property>
+            <property name="jpaVendorAdapter">
+                <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"
+                      p:showSql="${jpa.showSql}">
+                </bean>
+            </property>
+        </bean>
+
+        <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"
+              p:entityManagerFactory-ref="emf"/>
+
+        <bean class="com.lapeevvd.repository.datajpa.JpaUtil"/>
+    </beans>
+
+    <beans profile="tomcat">
+
     </beans>
 </beans>

@@ -1,12 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-<head>
-    <title>Title</title>
-    <link rel="stylesheet" href="css/style.css">
-
-</head>
+<jsp:include page="fragments/headTag.jsp"/>
 <body>
-<h2><a href="">Home</a></h2>
+<jsp:include page="fragments/bodyHeader.jsp"/>
+<h2><a href="${pageContext.request.contextPath}/">Home</a></h2>
 <h3>Edit meal</h3>
 <hr>
 <jsp:useBean id="meal" type="com.lapeevvd.model.UserMeal" scope="request"/>
@@ -27,5 +24,6 @@
     <button type="submit">Save</button>
     <button onclick="window.history.back()">Cancel</button>
 </form>
+<jsp:include page="fragments/footer.jsp"/>
 </body>
 </html>

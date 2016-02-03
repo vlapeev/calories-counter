@@ -31,4 +31,8 @@ public interface UserMealRepository {
      * @return вся еда в промежуток времени
      */
     List<UserMeal> getBetween(LocalDateTime start, LocalDateTime end, int userId);
+
+    default UserMeal getWithUser(int id, int userId){
+        throw new UnsupportedOperationException();
+    }
 }

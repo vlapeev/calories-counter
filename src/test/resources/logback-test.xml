@@ -11,6 +11,8 @@
         </encoder>
     </appender>
 
+    <!--<logger name="org.hibernate.type" level="trace"/>-->
+
     <logger name="org.springframework.jdbc" level="debug"/>
     <logger name="com.lapeevvd" level="debug"/>
 
