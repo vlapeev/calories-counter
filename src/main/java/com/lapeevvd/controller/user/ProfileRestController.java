@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/rest/profile")
 public class ProfileRestController extends AbstractUserController {
+    public static final String REST_URL = "/rest/profile";
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public User get() {
@@ -25,5 +26,10 @@ public class ProfileRestController extends AbstractUserController {
     @RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
     public void update(@RequestBody User user) {
         super.update(user, LoggedUser.getId());
+    }
+
+    @RequestMapping(value = "/text", method = RequestMethod.GET)
+    public String testUTF() {
+        return "Русский текст";
     }
 }

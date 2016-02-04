@@ -1,17 +1,13 @@
 package com.lapeevvd.model;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-
 import javax.persistence.*;
-
-import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.*;
 
 /**
  * Access(AccessType.FIELD) - вроде как дефолтное значение, попробовать убрать
  */
 @MappedSuperclass
 @Access(AccessType.FIELD)
-@JsonAutoDetect(fieldVisibility = ANY, getterVisibility = NONE, isGetterVisibility = NONE, setterVisibility = NONE)
+//@JsonAutoDetect(fieldVisibility = ANY, getterVisibility = NONE, isGetterVisibility = NONE, setterVisibility = NONE)
 public class AbstractEntity {
 
     public static final int START_SEQ = 100000;

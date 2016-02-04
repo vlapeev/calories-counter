@@ -1,11 +1,14 @@
 package com.lapeevvd.controller.user;
 
 import com.lapeevvd.model.User;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -25,20 +28,20 @@ public class AdminRestController extends AbstractUserController {
     }
 
     @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE,consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<User> createWithLocation(User user) {
+    public ResponseEntity<User> createWithLocation(@RequestBody User user) {
         User created = super.create(user);
 
-        /*URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
+        URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/{id}")
                 .buildAndExpand(created.getId()).toUri();
         HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.setLocation(uriOfNewResource);*/
+        httpHeaders.setLocation(uriOfNewResource);
 
-        return new ResponseEntity<User>(created, /*httpHeaders,*/ HttpStatus.CREATED);
+        return new ResponseEntity<>(created, httpHeaders, HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public void delete(int id) {
+    public void delete(@PathVariable("id") int id) {
         super.delete(id);
     }
 

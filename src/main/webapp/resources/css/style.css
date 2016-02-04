@@ -1,3 +1,4 @@
+/*
 a:link, a:visited {
     color: #38488f;
     text-decoration: none;
@@ -61,7 +62,7 @@ header, footer {
     border-left: none;
 }
 
-/* из-за background */
+!* из-за background *!
 
 .tableBlue th:first-child {
     border-top-left-radius: 20px;
@@ -90,4 +91,4 @@ dd {
 
 .exceeded {
     color: red;
-}
+}*/

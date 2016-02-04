@@ -11,7 +11,8 @@ import java.util.Set;
 
 public class TestUser extends User{
 
-    public static final ModelMatcher<User, TestUser> MATCHER = new ModelMatcher<>(user -> ((user instanceof TestUser) ? (TestUser) user : new TestUser(user)));
+    /*public static final ModelMatcher<User, TestUser> MATCHER = new ModelMatcher<>(user -> ((user instanceof TestUser) ? (TestUser) user : new TestUser(user)));*/
+    public static final ModelMatcher<User, TestUser> MATCHER = new ModelMatcher<>(user -> ((user instanceof TestUser) ? (TestUser) user : new TestUser(user)), User.class);
 
     public TestUser(User u){
         this(u.getId(), u.getName(), u.getPassword(), u.getEmail(), u.isEnabled(), u.getRoles(), u.getCaloriesPerDay());
@@ -33,11 +34,12 @@ public class TestUser extends User{
     public String toString() {
         return "User (" +
                 "id=" + id +
-                ", email=" + email +
                 ", name=" + name +
-                ", enabled=" + enabled +
                 ", password=" + password +
+                ", email=" + email +
+                ", enabled=" + enabled +
                 ", authorities=" + roles +
+                ", caloriesPerDay=" + caloriesPerDay +
                 ')';
     }
 

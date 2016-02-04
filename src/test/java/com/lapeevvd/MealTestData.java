@@ -1,5 +1,6 @@
 package com.lapeevvd;
 
+import com.lapeevvd.dataTransferObject.UserMealWithExceed;
 import com.lapeevvd.matcher.ModelMatcher;
 import com.lapeevvd.model.AbstractEntity;
 import com.lapeevvd.model.UserMeal;
@@ -13,7 +14,9 @@ import static java.time.LocalDateTime.of;
 
 public class MealTestData {
 
-    public static final ModelMatcher<UserMeal, String> MATCHER = new ModelMatcher<>(UserMeal::toString);
+    /*public static final ModelMatcher<UserMeal, String> MATCHER = new ModelMatcher<>(UserMeal::toString);*/
+    public static final ModelMatcher<UserMeal, String> MATCHER = new TestUtil.ToStringModelMatcher<>(UserMeal.class);
+    public static final ModelMatcher<UserMealWithExceed, String> MATCHER_WITH_EXCEED = new TestUtil.ToStringModelMatcher<>(UserMealWithExceed.class);
 
     public static final int MEAL_ID = AbstractEntity.START_SEQ + 2;
     public static final int ADMIN_MEAL_ID = AbstractEntity.START_SEQ + 8;

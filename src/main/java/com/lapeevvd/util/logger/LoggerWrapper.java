@@ -26,6 +26,10 @@ public class LoggerWrapper {
 
     // TODO: 21.01.2016 Класс не полный
 
+    public IllegalArgumentException getIllegalArgumentException(String msg, Throwable e) {
+        logger.error(msg, e);
+        return new IllegalArgumentException(msg, e);
+    }
 
     public NotFoundException getNotFoundException(String msg){
         logger.error(msg);

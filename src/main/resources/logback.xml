@@ -24,7 +24,8 @@
         </encoder>
     </appender>
 
-    <logger name="org.springframework.web" level="DEBUG"/>
+    <!--<logger name="org.springframework.web" level="DEBUG"/>-->
+    <logger name="org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver" level="debug"/>
     <logger name="com.lapeevvd" level="DEBUG"/>
 
     <root level="INFO">

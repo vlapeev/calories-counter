@@ -1,6 +1,5 @@
 package com.lapeevvd.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.lapeevvd.util.UserMealUtil;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -58,7 +57,7 @@ public class User extends NamedEntity {
 
     @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "user")
     @OrderBy("dateTime DESC")
-    @JsonIgnore
+    //@JsonIgnore
     protected List<UserMeal> meals;
 
     public User() {

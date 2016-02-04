@@ -30,7 +30,11 @@ public class UserMealUtil {
     );
 
     public static UserMealWithExceed createWithExceed(UserMeal userMeal, boolean exceeded) {
-        return new UserMealWithExceed(userMeal, exceeded);
+        return new UserMealWithExceed(userMeal.getId(), userMeal.getDateTime(), userMeal.getDescription(), userMeal.getCalories(), exceeded);
+    }
+
+    public static List<UserMealWithExceed> getWithExceeded(List<UserMeal> mealList, int caloriesPerDay) {
+        return getFilteredWithExceeded(mealList, LocalTime.MIN, LocalTime.MAX, caloriesPerDay);
     }
 
     //хитрый метод
