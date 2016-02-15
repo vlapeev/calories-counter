@@ -1,6 +1,6 @@
 package com.lapeevvd.model;
 
-import com.lapeevvd.util.UserMealUtil;
+import com.lapeevvd.util.UserUtil;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.validator.constraints.Email;
@@ -70,7 +70,7 @@ public class User extends NamedEntity {
     }
 
     public User(Integer id, String name, String password, String email, Role role, Role... roles) {
-        this(id, name, password, email, true, EnumSet.of(role, roles), UserMealUtil.DEFAULT_CALORIES_PER_DAY);
+        this(id, name, password, email, true, EnumSet.of(role, roles), UserUtil.DEFAULT_CALORIES_PER_DAY);
     }
 
     public User(Integer id, String name, String password, String email, boolean enabled, Set<Role> roles, int caloriesPerDay) {

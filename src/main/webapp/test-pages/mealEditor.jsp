@@ -1,8 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-<jsp:include page="fragments/headTag.jsp"/>
+<jsp:include page="../WEB-INF/jsp/fragments/headTag.jsp"/>
 <body>
-<jsp:include page="fragments/bodyHeader.jsp"/>
+<jsp:include page="../WEB-INF/jsp/fragments/bodyHeader.jsp"/>
 <h2><a href="${pageContext.request.contextPath}/">Home</a></h2>
 <h3>Edit meal</h3>
 <hr>
@@ -24,6 +24,6 @@
     <button type="submit">Save</button>
     <button onclick="window.history.back()">Cancel</button>
 </form>
-<jsp:include page="fragments/footer.jsp"/>
+<jsp:include page="../WEB-INF/jsp/fragments/footer.jsp"/>
 </body>
 </html>

@@ -1,5 +1,6 @@
 package com.lapeevvd.util;
 
+import com.lapeevvd.dataTransferObject.UserMealTo;
 import com.lapeevvd.dataTransferObject.UserMealWithExceed;
 import com.lapeevvd.model.UserMeal;
 
@@ -13,7 +14,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class UserMealUtil {
-    public static final int DEFAULT_CALORIES_PER_DAY = 2000;
 
     public static final List<UserMeal> USER_MEAL_LIST = Arrays.asList(
             new UserMeal(LocalDateTime.of(2015, Month.DECEMBER, 22, 10, 0), "Завтрак", 500),
@@ -47,5 +47,16 @@ public class UserMealUtil {
                 .filter(userMeal -> TimeUtil.isBetween(userMeal.getDateTime().toLocalTime(), startTime, endTime))
                 .map(userMeal -> createWithExceed(userMeal, caloriesSumByDate.get(userMeal.getDateTime().toLocalDate()) > caloriesPerDay))
                 .collect(Collectors.toList());
+    }
+
+    public static UserMeal createFromUserMealTo(UserMealTo userMealTo) {
+        return new UserMeal(null, userMealTo.getDateTime(), userMealTo.getDescription(), userMealTo.getCalories());
+    }
+
+    public static UserMeal updateFromUserMealTo(UserMeal userMeal, UserMealTo userMealTo) {
+        userMeal.setDateTime(userMealTo.getDateTime());
+        userMeal.setDescription(userMealTo.getDescription());
+        userMeal.setCalories(userMealTo.getCalories());
+        return userMeal;
     }
 }

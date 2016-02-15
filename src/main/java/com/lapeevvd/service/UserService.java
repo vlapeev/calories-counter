@@ -1,5 +1,6 @@
 package com.lapeevvd.service;
 
+import com.lapeevvd.dataTransferObject.UserTo;
 import com.lapeevvd.model.User;
 import com.lapeevvd.util.exception.NotFoundException;
 
@@ -10,6 +11,8 @@ public interface UserService {
     User save(User user);
 
     void update(User user);
+
+    void update(UserTo userTo);
 
     void delete(int id) throws NotFoundException;
 
@@ -22,4 +25,6 @@ public interface UserService {
     void evictCache();
 
     User getWithMeal(int id);
+
+    void enabled(int id, boolean enabled);
 }

@@ -4,8 +4,8 @@ import com.lapeevvd.controller.AbstractControllerTest;
 import com.lapeevvd.controller.json.JsonUtil;
 import com.lapeevvd.model.UserMeal;
 import com.lapeevvd.service.UserMealService;
-import com.lapeevvd.util.LoggedUser;
 import com.lapeevvd.util.UserMealUtil;
+import com.lapeevvd.util.UserUtil;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -75,7 +75,7 @@ public class UserMealRestControllerTest extends AbstractControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(MATCHER_WITH_EXCEED.contentListMatcher(UserMealUtil.getWithExceeded(USER_MEALS, LoggedUser.getCaloriesPerDay())));
+                .andExpect(MATCHER_WITH_EXCEED.contentListMatcher(UserMealUtil.getWithExceeded(USER_MEALS, UserUtil.DEFAULT_CALORIES_PER_DAY)));
     }
 
     @Test

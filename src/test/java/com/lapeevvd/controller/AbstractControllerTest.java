@@ -5,6 +5,7 @@ import com.lapeevvd.util.Profiles;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -45,9 +46,11 @@ public class AbstractControllerTest {
 
     @PostConstruct
     void postConstruct() {
+
         mockMvc = MockMvcBuilders
                 .webAppContextSetup(webApplicationContext)
                 .addFilter(CHARACTER_ENCODING_FILTER)
+                .apply(SecurityMockMvcConfigurers.springSecurity())
                 .build();
     }
 

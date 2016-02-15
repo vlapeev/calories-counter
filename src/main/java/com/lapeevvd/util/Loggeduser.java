@@ -1,22 +1,51 @@
 package com.lapeevvd.util;
 
-public class LoggedUser {
-    private static int id = 100000;
-    private static int caloriesPerDay = 2000;
+import com.lapeevvd.dataTransferObject.UserTo;
+import com.lapeevvd.model.User;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
-    public static int getId() {
-        return id;
+import java.util.Objects;
+
+
+public class LoggedUser extends org.springframework.security.core.userdetails.User{
+
+    private final UserTo userTo;
+
+    public LoggedUser(User user) {
+        super(user.getEmail(), user.getPassword(), user.isEnabled(), true, true, true, user.getRoles());
+        this.userTo = UserUtil.asTo(user);
     }
 
-    public static void setId(int id) {
-        LoggedUser.id = id;
+    public static LoggedUser safeGet() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth == null) {
+            return null;
+        }
+        Object user = auth.getPrincipal();
+        return (user instanceof LoggedUser) ? (LoggedUser) user : null;
+    }
+
+    public static LoggedUser get() {
+        LoggedUser user = safeGet();
+        Objects.requireNonNull(user, "No authorized user found");
+        return user;
+    }
+
+    public static int getId() {
+        return get().userTo.getId();
     }
 
     public static int getCaloriesPerDay() {
-        return caloriesPerDay;
+        return get().userTo.getCaloriesPerDay();
     }
 
-    public static void setCaloriesPerDay(int caloriesPerDay) {
-        LoggedUser.caloriesPerDay = caloriesPerDay;
+    public UserTo getUserTo() {
+        return userTo;
+    }
+
+    @Override
+    public String toString() {
+        return userTo.toString();
     }
 }

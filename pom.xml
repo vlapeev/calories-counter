@@ -18,6 +18,7 @@
 
         <spring-data-jpa.version>1.9.0.RELEASE</spring-data-jpa.version>
         <spring.version>4.2.4.RELEASE</spring.version>
+        <spring-security.version>4.0.3.RELEASE</spring-security.version>
 
         <postgres.version>9.4-1206-jdbc42</postgres.version>
         <hsqldb.version>2.3.2</hsqldb.version>
@@ -176,6 +177,17 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <!--security-->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+            <version>${spring-security.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+            <version>${spring-security.version}</version>
+        </dependency>
 
         <!--JSON-->
         <dependency>
@@ -259,6 +271,11 @@
             <artifactId>spring-test</artifactId>
             <version>${spring.version}</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+            <version>${spring-security.version}</version>
         </dependency>
     </dependencies>
 

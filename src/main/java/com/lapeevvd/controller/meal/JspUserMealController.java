@@ -16,11 +16,11 @@ import java.time.LocalTime;
 @RequestMapping(value = "/meals")
 public class JspUserMealController extends AbstractUserMealController {
 
-    @RequestMapping(method = RequestMethod.GET)
+    /*@RequestMapping(method = RequestMethod.GET)
     public String mealList(Model model) {
         model.addAttribute("mealList", super.getAll());
         return "mealList";
-    }
+    }*/
 
     @RequestMapping(value = "/create", method = RequestMethod.GET)
     public String create(Model model){

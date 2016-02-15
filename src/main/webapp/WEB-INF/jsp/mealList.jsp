@@ -4,63 +4,174 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <html>
 <jsp:include page="fragments/headTag.jsp"/>
+<link rel="stylesheet" href="webjars/datatables/1.10.9/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="webjars/datetimepicker/2.3.4/jquery.datetimepicker.css">
 <body>
 <jsp:include page="fragments/bodyHeader.jsp"/>
-<div class="block">
-    <div class="blockCalories">
-        <h2><a href="/"><fmt:message key="app.title"/></a></h2>
-    </div>
-    <h3><fmt:message key="mealList.title"/></h3>
+<div class="jumbotron">
+    <div class="container">
+        <div class="shadow">
+            <h3><fmt:message key="mealList.title"/></h3>
 
-    <div class="blockMeal">
-        <form method="post" action="meals/filter">
-            <dl>
-                <dt><fmt:message key="mealList.fromDate"/></dt>
-                <dd><input type="date" name="startDate" value="${startDate}"></dd>
-            </dl>
-            <dl>
-                <dt><fmt:message key="mealList.toDate"/></dt>
-                <dd><input type="date" name="endDate" value="${endDate}"></dd>
-            </dl>
-            <dl>
-                <dt><fmt:message key="mealList.fromTime"/></dt>
-                <dd><input type="time" name="startTime" value="${startTime}"></dd>
-            </dl>
-            <dl>
-                <dt><fmt:message key="mealList.toTime"/></dt>
-                <dd><input type="time" name="endTime" value="${endTime}"></dd>
-            </dl>
-            <button type="submit">Filter</button>
-        </form>
+            <div class="view-box">
+                <form id="filter" class="form-horizontal" role="form" method="post">
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="startDate"><fmt:message key="mealList.fromDate"/></label>
+
+                        <div class="col-sm-2">
+                            <input type="date" name="startDate" id="startDate">
+                        </div>
+                        <label class="control-label col-sm-2" for="endDate"><fmt:message key="mealList.toDate"/></label>
+
+                        <div class="col-sm-2">
+                            <input type="date" name="endDate" id="endDate">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="startTime"><fmt:message key="mealList.fromTime"/></label>
+
+                        <div class="col-sm-2">
+                            <input type="time" name="startDate" id="startTime">
+                        </div>
+                        <label class="control-label col-sm-2" for="endTime"><fmt:message key="mealList.toTime"/></label>
+
+                        <div class="col-sm-2">
+                            <input type="time" name="endDate" id="endTime">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-8">
+                            <button type="submit" class="btn btn-primary pull-right">Filter</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <p></p>
+            <a class="btn btn-sm btn-info" id="add"><fmt:message key="mealList.add"/></a>
+            <table id="datatable" class="table table-view table-striped display">
+                <thead>
+                <tr>
+                    <th><fmt:message key="mealList.date"/></th>
+                    <th><fmt:message key="mealList.desc"/></th>
+                    <th><fmt:message key="mealList.calories"/></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                </thead>
+                <c:forEach items="${mealList}" var="meal">
+                    <jsp:useBean id="meal" scope="page" type="com.lapeevvd.dataTransferObject.UserMealWithExceed"/>
+                    <tr class="${meal.exceed ? 'exceeded' : 'normal'}" id="${meal.id}">
+                        <td>
+                            <fmt:parseDate value="${meal.dateTime}" pattern="y-M-dd'T'H:m" var="parsedDate"/>
+                            <fmt:formatDate value="${parsedDate}" pattern="yyyy.MM.dd HH:mm"/>
+                        </td>
+                        <td>${meal.description}</td>
+                        <td>${meal.calories}</td>
+                        <td><a class="btn btn-xs btn-primary edit">Edit</a></td>
+                        <td><a class="btn btn-xs btn-danger delete">Delete</a></td>
+                    </tr>
+                </c:forEach>
+            </table>
+        </div>
     </div>
-    <p></p>
-    <a href="meals/create"><fmt:message key="mealList.add"/></a>
-    <p></p>
-    <table class="tableBlue" cellspacing="5">
-        <thead>
-        <tr>
-            <th><fmt:message key="mealList.date"/></th>
-            <th><fmt:message key="mealList.desc"/></th>
-            <th><fmt:message key="mealList.calories"/></th>
-            <th></th>
-            <th></th>
-        </tr>
-        </thead>
-        <c:forEach items="${mealList}" var="meal">
-            <jsp:useBean id="meal" scope="page" type="com.lapeevvd.dataTransferObject.UserMealWithExceed"/>
-            <tr class="${meal.exceed ? 'exceeded' : 'normal'}">
-                <td>
-                    <fmt:parseDate value="${meal.dateTime}" pattern="y-M-dd'T'H:m" var="parsedDate"/>
-                    <fmt:formatDate value="${parsedDate}" pattern="yyyy.MM.dd HH:mm"/>
-                </td>
-                <td>${meal.description}</td>
-                <td>${meal.calories}</td>
-                <td><a href="meals/update?id=${meal.id}">Update</a></td>
-                <td><a href="meals/delete?id=${meal.id}">Delete</a></td>
-            </tr>
-        </c:forEach>
-    </table>
 </div>
 <jsp:include page="fragments/footer.jsp"/>
+
+<div class="modal fade" id="editRow">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h2 class="modal-title">Edit Meal</h2>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" method="post" id="detailsForm">
+                    <input type="text" hidden="hidden" id="id" name="id">
+
+                    <div class="form-group">
+                        <label for="dateTime" class="control-label col-xs-3">Date</label>
+
+                        <div class="col-xs-9">
+                            <input type="datetime-local" class="form-control" id="dateTime" name="dateTime" placeholder="">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description" class="control-label col-xs-3">Description</label>
+
+                        <div class="col-xs-9">
+                            <input type="text" class="form-control" id="description" name="description" placeholder="Description">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="calories" class="control-label col-xs-3">Calories</label>
+
+                        <div class="col-xs-9">
+                            <input type="number" class="form-control" id="calories" name="calories" placeholder="2000">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-xs-offset-3 col-xs-9">
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
+<script type="text/javascript" src="webjars/jquery/2.1.4/jquery.min.js"></script>
+<script type="text/javascript" src="webjars/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="webjars/datetimepicker/2.3.4/jquery.datetimepicker.js"></script>
+<script type="text/javascript" src="webjars/datatables/1.10.9/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="webjars/noty/2.2.4/jquery.noty.packaged.min.js"></script>
+<script type="text/javascript" src="resources/js/datatablesUtil.js"></script>
+<script type="text/javascript">
+
+    var ajaxUrl = 'ajax/profile/meals/';
+    var oTable;
+
+    function updateTable() {
+        $.ajax({
+            type: "POST",
+            url: ajaxUrl + 'filter',
+            data: $('#filter').serialize(),
+            success: function (data) {
+                updateTableByData(data);
+            }
+        });
+        return false;
+    }
+
+    $('#filter').submit(function () {
+        updateTable();
+        return false;
+    });
+
+    $(function () {
+        oTable = $('#datatable').DataTable({
+            "bLengthChange": false,
+            "sSearch": false,
+            "aoColumns": [
+                {"mData": "dateTime"},
+                {"mData": "description"},
+                {"mData": "calories"},
+                {"sDefaultContent": "", "bSortable": false},
+                {"sDefaultContent": "", "bSortable": false}
+            ],
+            "aaSorting": [
+                [0, "desc"]
+            ]
+        });
+        makeEditable();
+        init();
+    });
+
+    function init(){
+
+    }
+</script>
 </html>

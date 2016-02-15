@@ -16,8 +16,8 @@ public class UserRepositoryImpl implements UserRepository {
     private AtomicInteger counter = new AtomicInteger(0);
 
     /*{
-        save(new User(1, "User", "user", "user@mail.io", Role.USER));
-        save(new User(2, "Admin", "admin", "admin@gmail.com", Role.ADMIN));
+        save(new User(1, "User", "user", "user@mail.io", Role.ROLE_USER));
+        save(new User(2, "Admin", "admin", "admin@gmail.com", Role.ROLE_ADMIN));
     }*/
 
     @Override

@@ -3,7 +3,7 @@ package com.lapeevvd;
 import com.lapeevvd.matcher.ModelMatcher;
 import com.lapeevvd.model.Role;
 import com.lapeevvd.model.User;
-import com.lapeevvd.util.UserMealUtil;
+import com.lapeevvd.util.UserUtil;
 
 import java.util.EnumSet;
 import java.util.Objects;
@@ -19,7 +19,7 @@ public class TestUser extends User{
     }
 
     public TestUser(String name, String password, String email, Role role, Role... roles) {
-        this(null, name, password, email, true, EnumSet.of(role, roles), UserMealUtil.DEFAULT_CALORIES_PER_DAY);
+        this(null, name, password, email, true, EnumSet.of(role, roles), UserUtil.DEFAULT_CALORIES_PER_DAY);
     }
 
     public TestUser(Integer id, String name, String password, String email, boolean enabled, Set<Role> roles, int caloriesPerDay) {

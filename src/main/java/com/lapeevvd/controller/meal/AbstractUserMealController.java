@@ -1,10 +1,12 @@
 package com.lapeevvd.controller.meal;
 
+import com.lapeevvd.dataTransferObject.UserMealTo;
 import com.lapeevvd.dataTransferObject.UserMealWithExceed;
 import com.lapeevvd.model.UserMeal;
 import com.lapeevvd.service.UserMealService;
 import com.lapeevvd.util.LoggedUser;
 import com.lapeevvd.util.UserMealUtil;
+import com.lapeevvd.util.UserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -26,6 +28,10 @@ public class AbstractUserMealController {
         service.save(userMeal, LoggedUser.getId());
     }
 
+    public void update(UserMealTo userMealTo) {
+        service.update(userMealTo);
+    }
+
     public void delete(int id){
         service.delete(id, LoggedUser.getId());
     }
@@ -36,11 +42,11 @@ public class AbstractUserMealController {
 
     public List<UserMealWithExceed> getAll(){
         return UserMealUtil.getFilteredWithExceeded(service.getAll(LoggedUser.getId()),
-                LocalTime.MIN, LocalTime.MAX, UserMealUtil.DEFAULT_CALORIES_PER_DAY);
+                LocalTime.MIN, LocalTime.MAX, UserUtil.DEFAULT_CALORIES_PER_DAY);
     }
 
     public List<UserMealWithExceed> getBetween(LocalDate startDate, LocalDate endDate, LocalTime startTime, LocalTime endTime){
         return UserMealUtil.getFilteredWithExceeded(service.getBetweenDates(startDate, endDate, LoggedUser.getId()),
-                startTime, endTime, UserMealUtil.DEFAULT_CALORIES_PER_DAY);
+                startTime, endTime, UserUtil.DEFAULT_CALORIES_PER_DAY);
     }
 }

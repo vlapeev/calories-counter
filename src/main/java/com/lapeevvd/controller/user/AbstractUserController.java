@@ -1,5 +1,6 @@
 package com.lapeevvd.controller.user;
 
+import com.lapeevvd.dataTransferObject.UserTo;
 import com.lapeevvd.model.User;
 import com.lapeevvd.service.UserService;
 import com.lapeevvd.util.logger.LoggerWrapper;
@@ -40,8 +41,18 @@ public class AbstractUserController {
         service.update(user);
     }
 
+    public void update(UserTo userTo) {
+        LOG.info("update " + userTo);
+        service.update(userTo);
+    }
+
     public User getByMail(String email) {
         LOG.info("getByEmail " + email);
         return service.getByEmail(email);
+    }
+
+    public void enabled(int id, boolean enabled) {
+        LOG.info((enabled ? "enable " : "disable ") + id);
+        service.enabled(id, enabled);
     }
 }

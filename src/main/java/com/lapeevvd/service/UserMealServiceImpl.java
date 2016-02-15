@@ -1,10 +1,14 @@
 package com.lapeevvd.service;
 
+import com.lapeevvd.dataTransferObject.UserMealTo;
 import com.lapeevvd.model.UserMeal;
 import com.lapeevvd.repository.UserMealRepository;
+import com.lapeevvd.util.LoggedUser;
+import com.lapeevvd.util.UserMealUtil;
 import com.lapeevvd.util.exception.CheckException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -25,6 +29,13 @@ public class UserMealServiceImpl implements UserMealService{
     @Override
     public UserMeal update(UserMeal userMeal, int userId) {
         return CheckException.check(repository.save(userMeal, userId), userMeal.getId());
+    }
+
+    @Override
+    @Transactional
+    public void update(UserMealTo userMealTo) {
+        UserMeal userMeal = get(userMealTo.getId(), LoggedUser.getId());
+        repository.save(UserMealUtil.updateFromUserMealTo(userMeal, userMealTo), LoggedUser.getId());
     }
 
     // может кинуть исключение

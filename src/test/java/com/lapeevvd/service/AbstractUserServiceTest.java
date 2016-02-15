@@ -33,13 +33,13 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest {
     /*@Test
     public void testSaveInDB() throws Exception {
         JdbcUserRepositoryImpl repository = new JdbcUserRepositoryImpl(dataSource);
-        TestUser testUser = new TestUser(null, "John", "stupid_password", "new@dkkh.com", false, Collections.singleton(Role.USER), 1555);
+        TestUser testUser = new TestUser(null, "John", "stupid_password", "new@dkkh.com", false, Collections.singleton(Role.ROLE_USER), 1555);
         repository.save(testUser);
     }*/
 
     @Test
     public void testSave() throws Exception {
-        TestUser testUser = new TestUser(null, "New", "newPass", "new@gmail.com", false, Collections.singleton(Role.USER), 1555);
+        TestUser testUser = new TestUser(null, "New", "newPass", "new@gmail.com", false, Collections.singleton(Role.ROLE_USER), 1555);
         User created = service.save(testUser.asUser());
         testUser.setId(created.getId());
         MATCHER.assertCollectionEquals(Arrays.asList(ADMIN, testUser, USER), service.getAll());
@@ -47,7 +47,7 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest {
 
     @Test(expected = DataAccessException.class)
     public void testDuplicateMailSave() throws Exception {
-        service.save(new TestUser("Duplicate", "newPass", "user@yandex.ru", Role.USER).asUser());
+        service.save(new TestUser("Duplicate", "newPass", "user@yandex.ru", Role.ROLE_USER).asUser());
     }
 
     @Test
