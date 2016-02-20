@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
 <jsp:include page="fragments/headTag.jsp"/>
 <link rel="stylesheet" href="webjars/datatables/1.10.9/css/jquery.dataTables.min.css">
@@ -10,7 +11,7 @@
 <div class="jumbotron">
     <div class="container">
         <div class="shadow">
-            <h3><fmt:message key="users.title"/></h3>
+            <legend><fmt:message key="users.title"/></legend>
 
             <div class="view-box">
                 <a class="btn btn-sm btn-info" id="add"><fmt:message key="users.add"/></a>
@@ -56,7 +57,7 @@
                 <h2 class="modal-title"><fmt:message key="users.edit"/></h2>
             </div>
             <div class="modal-body">
-                <form class="form-horizontal" method="post" id="detailsForm">
+                <form:form class="form-horizontal" method="post" id="detailsForm">
                     <input type="text" hidden="hidden" id="id" name="id">
 
                     <div class="form-group">
@@ -88,7 +89,7 @@
                             <button type="submit" class="btn btn-primary">Save</button>
                         </div>
                     </div>
-                </form>
+                </form:form>
             </div>
         </div>
     </div>
@@ -98,7 +99,7 @@
 <script type="text/javascript" src="webjars/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="webjars/datetimepicker/2.3.4/jquery.datetimepicker.js"></script>
 <script type="text/javascript" src="webjars/datatables/1.10.9/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="webjars/noty/2.2.4/jquery.noty.packaged.min.js"></script>
+<script type="text/javascript" src="webjars/noty/2.3.7/js/noty/packaged/jquery.noty.packaged.min.js"></script>
 <script type="text/javascript" src="resources/js/datatablesUtil.js"></script>
-<script type="text/javascript" src="resources/js/userListTable.js"></script>
+<script type="text/javascript" src="resources/js/userDatatebles.js"></script>
 </html>

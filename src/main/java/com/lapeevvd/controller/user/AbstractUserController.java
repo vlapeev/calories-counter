@@ -3,6 +3,7 @@ package com.lapeevvd.controller.user;
 import com.lapeevvd.dataTransferObject.UserTo;
 import com.lapeevvd.model.User;
 import com.lapeevvd.service.UserService;
+import com.lapeevvd.util.UserUtil;
 import com.lapeevvd.util.logger.LoggerWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -27,7 +28,7 @@ public class AbstractUserController {
     public User create(User user) {
         user.setId(null);
         LOG.info("create " + user);
-        return service.save(user);
+        return service.save(UserUtil.prepareToSave(user));
     }
 
     public void delete(int id) {
@@ -38,7 +39,7 @@ public class AbstractUserController {
     public void update(User user, int id) {
         user.setId(id);
         LOG.info("update " + user);
-        service.update(user);
+        service.update(UserUtil.prepareToSave(user));
     }
 
     public void update(UserTo userTo) {

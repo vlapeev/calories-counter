@@ -18,7 +18,7 @@ public class TimeUtil {
         return localDateTime.compareTo(start) >=0 && localDateTime.compareTo(end) <=0;
     }
 
-    // парсинг LocalDate & LocalTime вместе с StringUtils.isEmpty ? : ;
+    // парсинг LocalDate & LocalTime
 
     public static LocalDate parseLocalDate(String respParamValue, LocalDate def){
         return StringUtils.isEmpty(respParamValue) ? def : LocalDate.parse(respParamValue);

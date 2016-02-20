@@ -1,6 +1,5 @@
 package com.lapeevvd.model;
 
-import com.lapeevvd.util.UserUtil;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.validator.constraints.Email;
@@ -9,6 +8,8 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.EnumSet;
 import java.util.List;
@@ -36,6 +37,7 @@ public class User extends NamedEntity {
     @Column(name = "email", nullable = false, unique = true)
     @Email
     @NotEmpty
+    @Size(min = 6, message = " must be greater than  characters")
     protected String email;
 
     @Column(name = "registered", columnDefinition = "timestamp default now()")
@@ -53,7 +55,8 @@ public class User extends NamedEntity {
 
     @Column(name = "calories_per_day", columnDefinition = "default 2000")
     @Digits(fraction = 0, integer = 4)
-    protected int caloriesPerDay;
+    @NotNull(message = " may be not empty")
+    protected Integer caloriesPerDay;
 
     @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "user")
     @OrderBy("dateTime DESC")
@@ -69,8 +72,8 @@ public class User extends NamedEntity {
         this(u.getId(), u.getName(), u.getPassword(), u.getEmail(), u.isEnabled(), u.getRoles(), u.getCaloriesPerDay());
     }
 
-    public User(Integer id, String name, String password, String email, Role role, Role... roles) {
-        this(id, name, password, email, true, EnumSet.of(role, roles), UserUtil.DEFAULT_CALORIES_PER_DAY);
+    public User(Integer id, String name, String password, String email, Integer caloriesPerDay, Role role, Role... roles) {
+        this(id, name, password, email, true, EnumSet.of(role, roles), caloriesPerDay);
     }
 
     public User(Integer id, String name, String password, String email, boolean enabled, Set<Role> roles, int caloriesPerDay) {
@@ -126,7 +129,7 @@ public class User extends NamedEntity {
         return caloriesPerDay;
     }
 
-    public void setCaloriesPerDay(int caloriesPerDay) {
+    public void setCaloriesPerDay(Integer caloriesPerDay) {
         this.caloriesPerDay = caloriesPerDay;
     }
 

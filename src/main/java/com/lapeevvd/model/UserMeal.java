@@ -2,6 +2,7 @@ package com.lapeevvd.model;
 
 import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Range;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -25,6 +26,7 @@ public class UserMeal extends AbstractEntity {
 
     @Column(name = "date_time", nullable = false)
     @NotNull
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     protected LocalDateTime dateTime;
 
     @Column(name = "description", nullable = false)
@@ -32,6 +34,7 @@ public class UserMeal extends AbstractEntity {
     protected String description;
 
     @Column(name = "calories", nullable = false)
+    @NotNull
     @Range(min = 10, max = 4000)
     protected int calories;
 
@@ -72,7 +75,7 @@ public class UserMeal extends AbstractEntity {
         this.description = description;
     }
 
-    public void setCalories(int calories) {
+    public void setCalories(Integer calories) {
         this.calories = calories;
     }
 

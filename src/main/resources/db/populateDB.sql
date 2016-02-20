@@ -2,9 +2,9 @@ DELETE FROM user_roles;
 DELETE FROM users;
 ALTER SEQUENCE global_seq RESTART WITH 100000;
 
-INSERT INTO users (name, email, password)
-VALUES ('User', 'user@yandex.ru', 'password'),
-       ('Admin', 'admin@gmail.com', 'admin');
+INSERT INTO users (name, email, password, calories_per_day)
+VALUES ('User', 'user@yandex.ru', '$2a$10$MC/T/yFkDrwggqpLBfRUzeseldL35DsCZs7t5HT.u2UfqqgpPFKmW', 2000),
+       ('Admin', 'admin@gmail.com', '$2a$10$yFhlg5hksG78aBj.ER1DTO9XAqZQxHjtnhNDt8Zh7lDHlND/S4ZA2', 2000);
 
 INSERT INTO user_roles (role, user_id) VALUES
   ('ROLE_USER', 100000),

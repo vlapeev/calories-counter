@@ -3,13 +3,16 @@ package com.lapeevvd;
 import com.lapeevvd.matcher.ModelMatcher;
 import com.lapeevvd.model.Role;
 import com.lapeevvd.model.User;
+import com.lapeevvd.util.PasswordUtil;
 import com.lapeevvd.util.UserUtil;
+import com.lapeevvd.util.logger.LoggerWrapper;
 
 import java.util.EnumSet;
 import java.util.Objects;
 import java.util.Set;
 
 public class TestUser extends User{
+    private static final LoggerWrapper LOG = LoggerWrapper.get(TestUser.class);
 
     /*public static final ModelMatcher<User, TestUser> MATCHER = new ModelMatcher<>(user -> ((user instanceof TestUser) ? (TestUser) user : new TestUser(user)));*/
     public static final ModelMatcher<User, TestUser> MATCHER = new ModelMatcher<>(user -> ((user instanceof TestUser) ? (TestUser) user : new TestUser(user)), User.class);
@@ -18,8 +21,8 @@ public class TestUser extends User{
         this(u.getId(), u.getName(), u.getPassword(), u.getEmail(), u.isEnabled(), u.getRoles(), u.getCaloriesPerDay());
     }
 
-    public TestUser(String name, String password, String email, Role role, Role... roles) {
-        this(null, name, password, email, true, EnumSet.of(role, roles), UserUtil.DEFAULT_CALORIES_PER_DAY);
+    public TestUser(String name, String password, String email, int caloriesPerDay, Role role, Role... roles) {
+        this(null, name, password, email, true, EnumSet.of(role, roles), caloriesPerDay);
     }
 
     public TestUser(Integer id, String name, String password, String email, boolean enabled, Set<Role> roles, int caloriesPerDay) {
@@ -27,7 +30,7 @@ public class TestUser extends User{
     }
 
     public User asUser(){
-        return new User(this);
+        return UserUtil.prepareToSave(new User(this));
     }
 
     @Override
@@ -49,12 +52,22 @@ public class TestUser extends User{
         if (o == null || getClass() != o.getClass()) return false;
 
         TestUser that = (TestUser) o;
-        return Objects.equals(this.password, that.password)
+        return comparePassword(this.password, that.password)
                 && Objects.equals(this.id, that.id)
                 && Objects.equals(this.name, that.name)
                 && Objects.equals(this.email, that.email)
                 && Objects.equals(this.caloriesPerDay, that.caloriesPerDay)
                 && Objects.equals(this.enabled, that.enabled)
                 && Objects.equals(this.roles, that.roles);
+    }
+
+    private static boolean comparePassword(String rawPassword, String password) {
+        if (PasswordUtil.isEncoded(rawPassword)) {
+            LOG.warn("Expected password couldn't be compared with actual");
+        } else if (!PasswordUtil.isMatch(rawPassword, password)) {
+            LOG.error("Password " + password + " doesn't match encoded " + password);
+            return false;
+        }
+        return true;
     }
 }

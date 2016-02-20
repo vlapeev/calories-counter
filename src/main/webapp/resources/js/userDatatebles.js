@@ -9,26 +9,32 @@ function updateTable() {
 
 $(function () {
     oTable = $('#datatable').DataTable({
-        "sAjaxSource": ajaxUrl,
-        "sAjaxDataProp": "",
-        "bLengthChange": false,
+        ajax: {
+            url: ajaxUrl,
+            dataSrc: ""
+        },
+        lengthChange: false,
         /*"sSearch": false,*/
-        "aoColumns": [
-            {"mData": "name"},
+        columns: [
             {
-                "mData": "email",
-                "mRender": function (data, type) {
+                data: "name"
+            },
+            {
+                data: "email",
+                render: function (data, type) {
                     if (type == 'display') {
                         return '<a href="mailto:' + data + '">' + data + '</a>';
                     }
                     return data;
                 }
             },
-            {"mData": "roles", "bSearchable": false},
             {
-                "mData": "enabled",
-                "mRender": function (data, type, row) {
-                    debugger;
+                data: "roles",
+                searchable: false
+            },
+            {
+                data: "enabled",
+                render: function (data, type, row) {
                     if (type == 'display') {
                         return '<input type="checkbox" ' + (data ? 'checked' : '') + ' onclick="enable($(this),' + row.id + ');"/>';
                     }
@@ -36,8 +42,8 @@ $(function () {
                 }
             },
             {
-                "mData": "registered",
-                "mRender": function (date, type) {
+                data: "registered",
+                render: function (date, type) {
                     if (type == 'display') {
                         var dateObject = new Date(date);
                         return '<span>' + dateObject.toISOString().substring(0, 10) + '</span>';
@@ -45,10 +51,18 @@ $(function () {
                     return date;
                 }
             },
-            {"sDefaultContent": "", "bSortable": false, "mRender": renderEditBtn},
-            {"sDefaultContent": "", "bSortable": false, "mRender": renderDeleteBtn}
+            {
+                defaultContent: "",
+                orderable: false,
+                render: renderEditBtn
+            },
+            {
+                defaultContent: "",
+                orderable: false,
+                render: renderDeleteBtn
+            }
         ],
-        "aaSorting": [
+        "order": [
             [0, "asc"]
         ],
         "createdRow": function (row, data, dataIndex) {

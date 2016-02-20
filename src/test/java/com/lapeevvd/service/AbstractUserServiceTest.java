@@ -47,7 +47,7 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest {
 
     @Test(expected = DataAccessException.class)
     public void testDuplicateMailSave() throws Exception {
-        service.save(new TestUser("Duplicate", "newPass", "user@yandex.ru", Role.ROLE_USER).asUser());
+        service.save(new TestUser("Duplicate", "newPass", "user@yandex.ru", 2000, Role.ROLE_USER).asUser());
     }
 
     @Test

@@ -9,8 +9,9 @@ import java.util.Objects;
 
 
 public class LoggedUser extends org.springframework.security.core.userdetails.User{
+    static final long serialVersionUID = 1L;
 
-    private final UserTo userTo;
+    private UserTo userTo;
 
     public LoggedUser(User user) {
         super(user.getEmail(), user.getPassword(), user.isEnabled(), true, true, true, user.getRoles());
@@ -42,6 +43,10 @@ public class LoggedUser extends org.springframework.security.core.userdetails.Us
 
     public UserTo getUserTo() {
         return userTo;
+    }
+
+    public void setUserTo(UserTo userTo){
+        this.userTo = userTo;
     }
 
     @Override

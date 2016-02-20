@@ -1,11 +1,11 @@
 package com.lapeevvd.controller.user;
 
 import com.lapeevvd.TestUtil;
-import com.lapeevvd.UserTestData;
 import com.lapeevvd.controller.AbstractControllerTest;
 import com.lapeevvd.controller.json.JsonUtil;
-import com.lapeevvd.model.Role;
+import com.lapeevvd.dataTransferObject.UserTo;
 import com.lapeevvd.model.User;
+import com.lapeevvd.util.UserUtil;
 import org.junit.Test;
 import org.springframework.http.MediaType;
 
@@ -24,7 +24,8 @@ public class ProfileRestControllerTest extends AbstractControllerTest {
 
     @Test
     public void testGet() throws Exception {
-        TestUtil.print(mockMvc.perform(get(REST_URL).with(TestUtil.userHttpBasic(USER)))
+        TestUtil.print(mockMvc.perform(get(REST_URL)
+                .with(TestUtil.userHttpBasic(USER)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MATCHER.contentMatcher(USER)));
@@ -45,11 +46,14 @@ public class ProfileRestControllerTest extends AbstractControllerTest {
 
     @Test
     public void testUpdate() throws Exception {
-        User updated = new User(UserTestData.USER_ID, "newName", "newPassword", "newEmail", Role.ROLE_USER);
-        mockMvc.perform(put(REST_URL).contentType(MediaType.APPLICATION_JSON).with(TestUtil.userHttpBasic(USER)).content(JsonUtil.writeValue(updated)))
+        UserTo updatedTo = new UserTo(0, "newName", "newEmail", "newPassword", 1500);
+
+        mockMvc.perform(put(REST_URL).contentType(MediaType.APPLICATION_JSON)
+                .with(TestUtil.userHttpBasic(USER))
+                .content(JsonUtil.writeValue(updatedTo)))
                 .andDo(print())
                 .andExpect(status().isOk());
 
-        MATCHER.assertEquals(updated, new User(userService.getByEmail("newEmail")));
+        MATCHER.assertEquals(UserUtil.updateFromUserTo(new User(USER), updatedTo), userService.getByEmail("newemail"));
     }
 }

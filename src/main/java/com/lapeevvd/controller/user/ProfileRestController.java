@@ -1,5 +1,6 @@
 package com.lapeevvd.controller.user;
 
+import com.lapeevvd.dataTransferObject.UserTo;
 import com.lapeevvd.model.User;
 import com.lapeevvd.util.LoggedUser;
 import org.springframework.http.MediaType;
@@ -24,8 +25,9 @@ public class ProfileRestController extends AbstractUserController {
     }
 
     @RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void update(@RequestBody User user) {
-        super.update(user, LoggedUser.getId());
+    public void update(@RequestBody UserTo userTo) {
+        userTo.setId(LoggedUser.getId());
+        super.update(userTo);
     }
 
     @RequestMapping(value = "/text", method = RequestMethod.GET)

@@ -10,6 +10,7 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 public class UserTo implements Serializable{
+    static final long serialVersionUID = 1L;
 
     protected Integer id;
 
@@ -21,11 +22,12 @@ public class UserTo implements Serializable{
 
     @NotEmpty
     @Email
+    @Size(min = 6, message = " must be greater than 6 characters")
     protected String email;
 
     @Range(min = 500, max = 4000)
-    @NotNull(message = " must not be empty")
-    protected int caloriesPerDay = UserUtil.DEFAULT_CALORIES_PER_DAY;;
+    @NotNull(message = " may be not empty")
+    protected Integer caloriesPerDay = UserUtil.DEFAULT_CALORIES_PER_DAY;;
 
     public UserTo() {
     }
@@ -77,8 +79,12 @@ public class UserTo implements Serializable{
         this.email = email;
     }
 
-    public int getCaloriesPerDay() {
+    public Integer getCaloriesPerDay() {
         return caloriesPerDay;
+    }
+
+    public void setCaloriesPerDay(Integer caloriesPerDay) {
+        this.caloriesPerDay = caloriesPerDay;
     }
 
     @Override

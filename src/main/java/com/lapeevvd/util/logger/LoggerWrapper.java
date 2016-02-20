@@ -1,6 +1,7 @@
 package com.lapeevvd.util.logger;
 
 
+import com.lapeevvd.util.exception.ErrorInfo;
 import com.lapeevvd.util.exception.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,5 +35,18 @@ public class LoggerWrapper {
     public NotFoundException getNotFoundException(String msg){
         logger.error(msg);
         return new NotFoundException(msg);
+    }
+
+    public ErrorInfo getErrorInfo(CharSequence requestURL, Throwable e) {
+        logger.error("Exception at request " + requestURL);
+        return new ErrorInfo(requestURL, e);
+    }
+
+    public void warn(String msg) {
+        logger.warn(msg);
+    }
+
+    public void error(String msg) {
+        logger.warn(msg);
     }
 }
