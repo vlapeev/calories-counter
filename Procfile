@@ -1,0 +1,1 @@
+web:    java $JAVA_CM -Dspring.profiles.active="datajpa,heroku" -DCM_ROOT="." -jar target/dependency/webapp-runner.jar --port $PORT target/*.war
