@@ -1,7 +1,7 @@
 function makeEditable() {
 
     $('#add').click(function () {
-        /*$('#detailsForm').find(":input").val("");*/
+        $('#detailsForm').find(":input").val("");
         $('#id').val(0);
         $('#editRow').modal();
     });
